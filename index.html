@@ -752,75 +752,7 @@
             opacity: 0.9;
         }
 
-        /* ===== PASSWORD INFO SECTION ===== */
-        .password-info-section {
-            margin-bottom: var(--space-32);
-        }
-
-        .password-info-card {
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(0, 122, 255, 0.03) 100%);
-            border-radius: var(--radius-lg);
-            padding: var(--space-32);
-            box-shadow: var(--shadow-sm);
-            border-left: 4px solid var(--primary);
-        }
-
-        .password-info-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: var(--space-24);
-            flex-wrap: wrap;
-            gap: var(--space-16);
-        }
-
-        .password-info-header h2 {
-            font-size: var(--text-xl);
-            font-weight: 600;
-            color: var(--text);
-            margin: 0;
-        }
-
-        .password-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-8);
-            padding: var(--space-12) var(--space-20);
-            background: var(--primary);
-            color: white;
-            border-radius: 20px;
-            font-size: var(--text-lg);
-            font-weight: 600;
-            font-family: 'Courier New', monospace;
-            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
-        }
-
-        .password-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-24);
-            margin-top: var(--space-24);
-        }
-
-        .password-device {
-            background: var(--surface);
-            padding: var(--space-20);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .password-device h3 {
-            font-size: var(--text-lg);
-            font-weight: 600;
-            margin-bottom: var(--space-12);
-            color: var(--primary);
-        }
-
-        .password-device p {
-            margin-bottom: var(--space-8);
-            color: var(--text-secondary);
-        }
-
+        /* ===== PASSWORD VALUE (Used in Chatbot) ===== */
         .password-value {
             font-family: 'Courier New', monospace;
             font-size: var(--text-lg);
@@ -957,9 +889,6 @@
                 max-height: 400px;
             }
 
-            .password-details {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* ===== TOAST ===== */
@@ -1115,51 +1044,6 @@
                         <p>Network configuration file containing the Hansa Villa network topology</p>
                     </div>
                     <a href="Hansana1.pkt" download class="download-btn" rel="noopener">Download</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ========== PASSWORD INFORMATION SECTION ========== -->
-        <section class="password-info-section">
-            <div class="password-info-card">
-                <div class="password-info-header">
-                    <h2>🔐 Device Passwords - Required Before Starting</h2>
-                    <div class="password-badge">Password Helper</div>
-                </div>
-                <p style="font-size: var(--text-base); color: var(--text-secondary); margin-bottom: var(--space-24);">
-                    <strong>IMPORTANT:</strong> You need to know TWO passwords before starting verification. The first password is for console access, and the second password is for privileged mode (enable mode).
-                </p>
-                
-                <div class="password-details">
-                    <div class="password-device">
-                        <h3>Step 1: Console Password</h3>
-                        <p>When you first open Router0 or Switch0 CLI, you'll see:</p>
-                        <p style="font-family: 'Courier New', monospace; color: var(--text); background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">User Access Verification<br>Password:</p>
-                        <p>Type the console password:</p>
-                        <div class="password-value">Cisco123</div>
-                        <p style="margin-top: var(--space-8); font-size: var(--text-sm);">After entering, you'll see: <code style="font-family: 'Courier New', monospace;">Hansa_Router&gt;</code> or <code style="font-family: 'Courier New', monospace;">Hansa_Switch&gt;</code></p>
-                    </div>
-                    
-                    <div class="password-device">
-                        <h3>Step 2: Enable/Privileged Mode Password</h3>
-                        <p>After console login, type <code>enable</code> and press ENTER:</p>
-                        <p style="font-family: 'Courier New', monospace; color: var(--text); background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">Hansa_Router&gt; enable<br>Password:</p>
-                        <p>Type the enable password:</p>
-                        <div class="password-value">Class123</div>
-                        <p style="margin-top: var(--space-8); font-size: var(--text-sm);">After entering, you'll see: <code style="font-family: 'Courier New', monospace;">Hansa_Router#</code> or <code style="font-family: 'Courier New', monospace;">Hansa_Switch#</code></p>
-                    </div>
-                </div>
-
-                <div style="margin-top: var(--space-24); padding: var(--space-16); background: rgba(255, 149, 0, 0.1); border-left: 4px solid var(--warning); border-radius: var(--radius-md);">
-                    <p style="margin: 0; font-weight: 600; color: var(--warning);">⚠️ Password Details:</p>
-                    <ul style="margin: var(--space-8) 0 0 var(--space-24);">
-                        <li><strong>Console Password:</strong> <code>Cisco123</code> (Capital C, lowercase i-s-c-o, numbers 1-2-3)</li>
-                        <li><strong>Enable Password:</strong> <code>Class123</code> (Capital C, lowercase l-a-s-s, numbers 1-2-3)</li>
-                        <li>Both passwords are case-sensitive - make sure CAPS LOCK is OFF</li>
-                        <li>No spaces before or after the passwords</li>
-                        <li>You won't see characters as you type - this is normal for security</li>
-                        <li>Same passwords work for both Router0 and Switch0</li>
-                    </ul>
                 </div>
             </div>
         </section>
