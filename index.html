@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hansa Villa Network Verification Portal - Complete guide for network verification">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hansa Villa Network Verification Portal</title>
+    <!-- Performance Optimizations -->
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#007AFF">
+    <style>
+        /* ===== DESIGN SYSTEM VARIABLES - iOS STYLE ===== */
+        :root {
+            --primary: #007AFF;
+            --primary-hover: #0051D5;
+            --success: #34C759;
+            --warning: #FF9500;
+            --error: #FF3B30;
+            --bg: #F2F2F7;
+            --surface: #FFFFFF;
+            --text: #000000;
+            --text-secondary: #8E8E93;
+            --border: rgba(0, 0, 0, 0.1);
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --text-xs: 13px;
+            --text-sm: 15px;
+            --text-base: 17px;
+            --text-lg: 20px;
+            --text-xl: 28px;
+            --text-2xl: 34px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 24px;
+            --blur: blur(30px) saturate(180%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: var(--font);
+            font-size: var(--text-base);
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        h1 { font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-16); }
+        h2 { font-size: var(--text-xl); font-weight: 600; margin-bottom: var(--space-16); }
+        h3 { font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-12); }
+        p { margin-bottom: var(--space-12); }
+        ul, ol { margin-left: var(--space-24); margin-bottom: var(--space-12); }
+        li { margin-bottom: var(--space-8); }
+
+        /* ===== HEADER ===== */
+        header {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 0.5px solid var(--border);
+            padding: var(--space-20) var(--space-24);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== NAVIGATION MENU ===== */
+
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 0.5px solid var(--border);
+            padding: var(--space-24) var(--space-24);
+            position: sticky;
+            top: 72px;
+            z-index: 98;
+            box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            right: 40px;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .progress-line-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--success);
+            transition: width 400ms ease-out;
+        }
+
+        .progress-step {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: var(--text-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            z-index: 1;
+            will-change: transform, background-color, border-color;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .progress-step:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .progress-step.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(1.12);
+            box-shadow: 0 0 0 6px rgba(0, 122, 255, 0.2), 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .progress-step.completed {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .progress-step.completed::after {
+            content: '✓';
+            font-size: 18px;
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-32) var(--space-24);
+        }
+
+        section {
+            margin-bottom: var(--space-32);
+            content-visibility: auto;
+            contain: layout style paint;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--surface);
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-16);
+            box-shadow: var(--shadow-sm);
+            transition: all 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, box-shadow;
+            transform: translateZ(0);
+            contain: layout style paint;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .critical-card {
+            background: rgba(255, 149, 0, 0.05);
+            border: none;
+            border-left: 4px solid var(--warning);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .warning-card {
+            background: rgba(255, 59, 48, 0.05);
+            border: none;
+            border-left: 4px solid var(--error);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .security-card {
+            background: rgba(0, 122, 255, 0.05);
+            border: none;
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: var(--space-4) var(--space-12);
+            border-radius: 20px;
+            font-size: var(--text-xs);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-critical {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--error);
+            color: white;
+        }
+
+        .badge-security {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== CHECKLIST ===== */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding: var(--space-8) var(--space-12);
+            background: rgba(0, 122, 255, 0.05);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-8);
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+
+        .checklist input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* ===== TEST SECTIONS ===== */
+        .test {
+            background: var(--surface);
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            display: none;
+            animation: fadeIn 300ms ease-out;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 500px;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .test.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate3d(0, 20px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        
+        /* Performance: Optimize animations */
+        .test.active {
+            will-change: opacity, transform;
+            transform: translateZ(0);
+        }
+
+        .test-header {
+            display: flex;
+            gap: var(--space-16);
+            align-items: center;
+            margin-bottom: var(--space-20);
+        }
+
+        .test-number {
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-xl);
+            font-weight: 600;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.25);
+        }
+
+        .test-title {
+            flex: 1;
+        }
+
+        .test-subtitle {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        /* ===== INFO BOXES ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            margin: var(--space-24) 0;
+        }
+
+        .info-box {
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--space-16);
+            background: rgba(0, 122, 255, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-box h4 {
+            font-size: var(--text-sm);
+            font-weight: 700;
+            margin-bottom: var(--space-8);
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-box p {
+            font-size: var(--text-sm);
+            line-height: 1.5;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .info-box.success {
+            background: rgba(34, 197, 94, 0.05);
+            border-left-color: var(--success);
+        }
+
+        .info-box.success h4 {
+            color: var(--success);
+        }
+
+        .info-box.warning {
+            background: rgba(249, 115, 22, 0.05);
+            border-left-color: var(--warning);
+        }
+
+        .info-box.warning h4 {
+            color: var(--warning);
+        }
+
+        /* ===== STEP-BY-STEP BOX ===== */
+        .steps-box {
+            background: rgba(33, 128, 141, 0.05);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            padding: var(--space-20);
+            margin: var(--space-20) 0;
+        }
+
+        .steps-box h4 {
+            color: var(--primary);
+            font-size: var(--text-base);
+            margin-bottom: var(--space-12);
+            font-weight: 700;
+        }
+
+        .steps-box ol {
+            margin-left: var(--space-20);
+        }
+
+        .steps-box li {
+            margin-bottom: var(--space-8);
+            font-size: var(--text-sm);
+        }
+
+        /* ===== EXPANDABLE SECTIONS ===== */
+        .expandable {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            margin: var(--space-20) 0;
+            overflow: hidden;
+            transition: all 200ms ease-out;
+        }
+
+        .expandable-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-12) var(--space-16);
+            background: rgba(249, 115, 22, 0.05);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: var(--text-sm);
+            border-left: 4px solid var(--warning);
+            transition: background 150ms;
+        }
+
+        .expandable-header:hover {
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 300ms ease-out;
+        }
+
+        .expandable.active .expandable-content {
+            max-height: 2000px;
+        }
+
+        .expandable.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .expandable-body {
+            padding: var(--space-16);
+            background: var(--surface);
+        }
+
+        .arrow {
+            transition: transform 200ms ease-out;
+            font-size: 12px;
+        }
+
+        .troubleshooting-item {
+            margin-bottom: var(--space-16);
+            padding: var(--space-12);
+            background: rgba(192, 21, 47, 0.03);
+            border-left: 3px solid var(--error);
+            border-radius: var(--radius-sm);
+        }
+
+        .troubleshooting-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .troubleshooting-item strong {
+            display: block;
+            color: var(--error);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-4);
+        }
+
+        .troubleshooting-item p {
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-4);
+            line-height: 1.5;
+        }
+
+        /* ===== COMMAND BOX ===== */
+        .command-section {
+            margin: var(--space-24) 0;
+        }
+
+        .command-label {
+            font-size: var(--text-xs);
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--space-8);
+        }
+
+        .command-box {
+            position: relative;
+            background: #1a1a1a;
+            color: #e8e8e8;
+            padding: var(--space-20);
+            border-radius: var(--radius-md);
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            margin-bottom: var(--space-8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: var(--space-12);
+            right: var(--space-12);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: var(--space-8) var(--space-16);
+            border-radius: 20px;
+            border-radius: var(--radius-sm);
+            font-size: var(--text-xs);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 150ms;
+            font-family: var(--font);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .device-label {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* ===== OUTPUT BOX ===== */
+        .output-box {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-16);
+            font-family: 'Courier New', monospace;
+            font-size: var(--text-sm);
+            color: var(--text);
+            white-space: pre-wrap;
+            margin: var(--space-20) 0;
+        }
+
+        /* ===== BUTTONS ===== */
+        .action-buttons {
+            display: flex;
+            gap: var(--space-12);
+            margin: var(--space-32) 0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: var(--space-14) var(--space-28);
+            border-radius: var(--radius-md);
+            font-size: var(--text-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: none;
+            font-family: var(--font);
+            will-change: transform, background-color, opacity;
+            letter-spacing: -0.2px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 122, 255, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 2px 8px rgba(52, 199, 89, 0.2);
+        }
+
+        .btn-success:hover {
+            background: #30B85A;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 199, 89, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== NAVIGATION FOOTER ===== */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-24);
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-32);
+        }
+
+        .nav-footer .btn {
+            flex: 0 0 auto;
+            min-width: 120px;
+        }
+
+        .step-counter {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* ===== DOWNLOADS SECTION ===== */
+        .downloads-section {
+            margin-bottom: var(--space-32);
+        }
+
+        .downloads-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-24);
+        }
+
+        .downloads-header {
+            margin-bottom: var(--space-24);
+        }
+
+        .downloads-header h2 {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-8);
+        }
+
+        .downloads-header p {
+            font-size: var(--text-base);
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-20);
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-16);
+            transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, background-color;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .download-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .download-item:hover {
+            background: rgba(0, 122, 255, 0.06);
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: var(--shadow-md);
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-info h3 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: var(--space-4);
+        }
+
+        .download-info p {
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .download-btn {
+            padding: var(--space-14) var(--space-28);
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--text-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-decoration: none;
+            display: inline-block;
+            font-family: var(--font);
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+            letter-spacing: -0.2px;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+
+        .download-btn:active {
+            transform: translateY(0) scale(0.98);
+            opacity: 0.9;
+        }
+
+        /* ===== PASSWORD INFO SECTION ===== */
+        .password-info-section {
+            margin-bottom: var(--space-32);
+        }
+
+        .password-info-card {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(0, 122, 255, 0.03) 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-32);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--primary);
+        }
+
+        .password-info-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-24);
+            flex-wrap: wrap;
+            gap: var(--space-16);
+        }
+
+        .password-info-header h2 {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .password-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-12) var(--space-20);
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: var(--text-lg);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+        }
+
+        .password-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-24);
+            margin-top: var(--space-24);
+        }
+
+        .password-device {
+            background: var(--surface);
+            padding: var(--space-20);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .password-device h3 {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            margin-bottom: var(--space-12);
+            color: var(--primary);
+        }
+
+        .password-device p {
+            margin-bottom: var(--space-8);
+            color: var(--text-secondary);
+        }
+
+        .password-value {
+            font-family: 'Courier New', monospace;
+            font-size: var(--text-lg);
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(0, 122, 255, 0.1);
+            padding: var(--space-8) var(--space-12);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+            margin-top: var(--space-8);
+        }
+
+        /* ===== AI CHATBOT BUTTON ===== */
+        .chatbot-button {
+            position: fixed;
+            bottom: var(--space-32);
+            right: var(--space-32);
+            width: 64px;
+            height: 64px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            z-index: 999;
+            transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, box-shadow;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 122, 255, 0.45);
+        }
+
+        .chatbot-button:active {
+            transform: scale(0.96);
+        }
+
+        .chatbot-panel {
+            position: fixed;
+            bottom: 100px;
+            right: var(--space-32);
+            width: 360px;
+            max-height: 520px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            border: 0.5px solid var(--border);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chatbot-panel.active {
+            display: flex;
+        }
+
+        .chatbot-header {
+            background: var(--primary);
+            color: white;
+            padding: var(--space-16) var(--space-20);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header h3 {
+            margin: 0;
+            font-size: var(--text-lg);
+            font-weight: 600;
+        }
+
+        .chatbot-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 200ms;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatbot-body {
+            padding: var(--space-20);
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chatbot-message {
+            margin-bottom: var(--space-16);
+            padding: var(--space-12);
+            background: var(--bg);
+            border-radius: var(--radius-md);
+        }
+
+        .chatbot-message strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: var(--space-8);
+        }
+
+        @media (max-width: 768px) {
+            .chatbot-button {
+                bottom: var(--space-16);
+                right: var(--space-16);
+                width: 56px;
+                height: 56px;
+                font-size: 20px;
+            }
+
+            .chatbot-panel {
+                bottom: 80px;
+                right: var(--space-16);
+                left: var(--space-16);
+                width: auto;
+                max-height: 400px;
+            }
+
+            .password-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: var(--space-32);
+            right: var(--space-32);
+            background: var(--text);
+            color: white;
+            padding: var(--space-16) var(--space-24);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 200ms ease-out;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        /* ===== TABLES ===== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: var(--space-20) 0;
+        }
+
+        th, td {
+            padding: var(--space-12);
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: var(--text-sm);
+        }
+
+        th {
+            background: rgba(33, 128, 141, 0.05);
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background: rgba(33, 128, 141, 0.03);
+        }
+
+        code {
+            background: #1a1a1a;
+            color: #e8e8e8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: var(--text-xs);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ===== COMPLETION ===== */
+        .completion-card {
+            text-align: center;
+            padding: var(--space-32);
+        }
+
+        .completion-card h2 {
+            color: var(--success);
+            margin-bottom: var(--space-16);
+        }
+
+        .completion-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-16);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--space-24);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+            margin-top: var(--space-32);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header { padding: var(--space-16); }
+            .progress-container { top: 60px; padding: var(--space-16); }
+            .progress-bar { padding: 0 var(--space-16); }
+            .progress-step { width: 36px; height: 36px; font-size: 12px; }
+            .progress-line { left: 30px; right: 30px; }
+            main { padding: var(--space-16); }
+            .test { padding: var(--space-20); }
+            .info-grid { grid-template-columns: 1fr; }
+            .action-buttons { flex-direction: column; }
+            .nav-footer { flex-direction: column; gap: var(--space-12); }
+            .nav-footer .btn { width: 100%; }
+            h1 { font-size: var(--text-xl); }
+            h2 { font-size: var(--text-lg); }
+            .download-item { flex-direction: column; align-items: flex-start; gap: var(--space-12); }
+            .download-btn { width: 100%; text-align: center; }
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            header, .progress-container, footer, .copy-btn, .action-buttons, .nav-footer { display: none; }
+            .test { display: block !important; page-break-inside: avoid; }
+            .expandable { page-break-inside: avoid; }
+            .expandable-content { max-height: none !important; }
+            section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Hansa Villa Network - Complete Verification Guide</h1>
+            <p style="font-size: var(--text-base); color: var(--text-secondary); margin-top: var(--space-8);">Read this guide from top to bottom - everything is explained</p>
+            <p style="font-size: var(--text-sm); color: var(--text-secondary); margin-top: var(--space-4); font-style: italic;">This guide explains EVERY step. You don't need to figure anything out.</p>
+        </div>
+    </header>
+
+
+
+    <main>
+        <!-- ========== DOWNLOADS SECTION ========== -->
+        <section class="downloads-section">
+            <div class="downloads-card">
+                <div class="downloads-header">
+                    <h2>📥 Required Downloads</h2>
+                    <p>Before starting the verification process, please download and install the following required files:</p>
+                </div>
+                
+                <div class="download-item">
+                    <div class="download-info">
+                        <h3>Cisco Packet Tracer Application (Direct Download)</h3>
+                        <p>Network simulation software installer - Windows 64-bit version (300 MB)</p>
+                    </div>
+                    <a href="CiscoPacketTracer_900_win_64bit.exe" download class="download-btn" rel="noopener">Download EXE</a>
+                </div>
+                
+                <div class="download-item">
+                    <div class="download-info">
+                        <h3>Hansana1.pkt</h3>
+                        <p>Network configuration file containing the Hansa Villa network topology</p>
+                    </div>
+                    <a href="Hansana1.pkt" download class="download-btn" rel="noopener">Download</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== PASSWORD INFORMATION SECTION ========== -->
+        <section class="password-info-section">
+            <div class="password-info-card">
+                <div class="password-info-header">
+                    <h2>🔐 Device Passwords - Required Before Starting</h2>
+                    <div class="password-badge">Password Helper</div>
+                </div>
+                <p style="font-size: var(--text-base); color: var(--text-secondary); margin-bottom: var(--space-24);">
+                    <strong>IMPORTANT:</strong> You need to know TWO passwords before starting verification. The first password is for console access, and the second password is for privileged mode (enable mode).
+                </p>
+                
+                <div class="password-details">
+                    <div class="password-device">
+                        <h3>Step 1: Console Password</h3>
+                        <p>When you first open Router0 or Switch0 CLI, you'll see:</p>
+                        <p style="font-family: 'Courier New', monospace; color: var(--text); background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">User Access Verification<br>Password:</p>
+                        <p>Type the console password:</p>
+                        <div class="password-value">Cisco123</div>
+                        <p style="margin-top: var(--space-8); font-size: var(--text-sm);">After entering, you'll see: <code style="font-family: 'Courier New', monospace;">Hansa_Router&gt;</code> or <code style="font-family: 'Courier New', monospace;">Hansa_Switch&gt;</code></p>
+                    </div>
+                    
+                    <div class="password-device">
+                        <h3>Step 2: Enable/Privileged Mode Password</h3>
+                        <p>After console login, type <code>enable</code> and press ENTER:</p>
+                        <p style="font-family: 'Courier New', monospace; color: var(--text); background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">Hansa_Router&gt; enable<br>Password:</p>
+                        <p>Type the enable password:</p>
+                        <div class="password-value">Class123</div>
+                        <p style="margin-top: var(--space-8); font-size: var(--text-sm);">After entering, you'll see: <code style="font-family: 'Courier New', monospace;">Hansa_Router#</code> or <code style="font-family: 'Courier New', monospace;">Hansa_Switch#</code></p>
+                    </div>
+                </div>
+
+                <div style="margin-top: var(--space-24); padding: var(--space-16); background: rgba(255, 149, 0, 0.1); border-left: 4px solid var(--warning); border-radius: var(--radius-md);">
+                    <p style="margin: 0; font-weight: 600; color: var(--warning);">⚠️ Password Details:</p>
+                    <ul style="margin: var(--space-8) 0 0 var(--space-24);">
+                        <li><strong>Console Password:</strong> <code>Cisco123</code> (Capital C, lowercase i-s-c-o, numbers 1-2-3)</li>
+                        <li><strong>Enable Password:</strong> <code>Class123</code> (Capital C, lowercase l-a-s-s, numbers 1-2-3)</li>
+                        <li>Both passwords are case-sensitive - make sure CAPS LOCK is OFF</li>
+                        <li>No spaces before or after the passwords</li>
+                        <li>You won't see characters as you type - this is normal for security</li>
+                        <li>Same passwords work for both Router0 and Switch0</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== VERIFICATION WIZARD ========== -->
+
+
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-line">
+                    <div class="progress-line-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-step active" onclick="jumpToStep(1)">1</div>
+                <div class="progress-step" onclick="jumpToStep(2)">2</div>
+                <div class="progress-step" onclick="jumpToStep(3)">3</div>
+                <div class="progress-step" onclick="jumpToStep(4)">4</div>
+                <div class="progress-step" onclick="jumpToStep(5)">5</div>
+                <div class="progress-step" onclick="jumpToStep(6)">6</div>
+            </div>
+        </div>
+
+        <!-- Test 1 -->
+        <div id="test1" class="test active">
+            <div class="test-header">
+                <div class="test-number">1</div>
+                <div class="test-title">
+                    <h3>VLAN 10 Gateway Connectivity Test</h3>
+                    <div class="test-subtitle">Verify Guest WiFi Network Access</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary); margin-bottom: var(--space-24);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-16);">What is VLAN 10?</h3>
+                <p>VLAN stands for "Virtual Local Area Network." Think of it like creating separate, invisible networks within your physical network. VLAN 10 is specifically designated for the Guest WiFi network at Hansa Villa hotel. When guests connect their laptops, tablets, or phones to the hotel WiFi, they're automatically placed into VLAN 10. This network is completely separate from the hotel's operations network, which means guests cannot accidentally (or intentionally) access sensitive hotel systems like the front desk computer, reservation system, or security cameras. VLAN 10 gives guests internet access while keeping the hotel's internal systems secure. The gateway at 10.10.10.1 is the "doorway" that all guest traffic must pass through to reach the internet.</p>
+            </div>
+
+            <div class="card" style="background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--success); margin-bottom: var(--space-24);">
+                <h3 style="color: var(--success); margin-bottom: var(--space-16);">Why This Test Matters</h3>
+                <p>This is the most important test in your entire verification process. Here's why: if the VLAN 10 gateway doesn't respond, guests cannot use WiFi at all. Imagine checking into a hotel and being told "the WiFi is down" - that's a terrible experience. This test confirms that the gateway is online, responding instantly (under 1 millisecond), and ready to handle guest traffic. When you run this ping test and see 100% success, you're proving that Router0's sub-interface for VLAN 10 (called Gig0/0.10) is configured correctly, is powered on, and is actively routing traffic. If this test fails, every guest device will be unable to access the internet. Success here means the foundation of your guest network is solid.</p>
+            </div>
+
+            <div class="warning-card" style="margin-bottom: var(--space-24);">
+                <h3 style="color: var(--error); margin-bottom: var(--space-16);">⚠️ CRITICAL: PASSWORD INFORMATION - READ THIS FIRST!</h3>
+                <p style="margin-bottom: var(--space-12);"><strong>Before you can run ANY commands, you MUST understand how passwords work in Cisco devices.</strong></p>
+                
+                <div style="background: rgba(0,0,0,0.05); padding: var(--space-16); border-radius: var(--radius-sm); font-family: 'Courier New', monospace; margin: var(--space-16) 0;">
+                    <p style="margin-bottom: var(--space-8);"><strong>What you'll see when you open Router0 CLI:</strong></p>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">User Access Verification<br>Password:</p>
+                    <p style="margin-bottom: var(--space-8);">☝️ First, enter console password: <strong>Cisco123</strong></p>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Hansa_Router&gt;</p>
+                    <p style="margin-bottom: var(--space-8);">☝️ Notice the &gt; symbol? This means you're NOT in privileged mode yet.</p>
+                    
+                    <p style="margin-top: var(--space-16); margin-bottom: var(--space-8);"><strong>What you need to type for privileged mode:</strong></p>
+                    <p style="margin-bottom: var(--space-4);">You type: <span style="color: var(--success);">enable</span></p>
+                    <p style="margin-bottom: var(--space-4);">You press: <span style="color: var(--success);">ENTER</span></p>
+                    <p style="margin-bottom: var(--space-8);">It will ask: Password:</p>
+                    <p style="margin-bottom: var(--space-4);">You type: <span style="color: var(--success);">Class123</span> (IMPORTANT: capital C, lowercase l-a-s-s-1-2-3, no spaces)</p>
+                    <p style="margin-bottom: var(--space-4);">You press: <span style="color: var(--success);">ENTER</span></p>
+                    
+                    <p style="margin-top: var(--space-16); margin-bottom: var(--space-8);"><strong>What you should see after entering password:</strong></p>
+                    <p style="color: var(--success); margin-bottom: var(--space-4);">Hansa_Router#</p>
+                    <p style="margin-bottom: var(--space-8);">☝️ Notice the # symbol? This means SUCCESS! You're in privileged mode and ready to run commands.</p>
+                </div>
+                
+                <div style="background: rgba(192, 21, 47, 0.1); padding: var(--space-12); border-radius: var(--radius-sm); border-left: 3px solid var(--error); margin-top: var(--space-16);">
+                    <p style="font-weight: 600; margin-bottom: var(--space-8);">🔴 HOW TO KNOW IF YOU DID IT WRONG:</p>
+                    <ul style="margin-left: var(--space-20);">
+                        <li style="margin-bottom: var(--space-4);">If you still see "Hansa_Router&gt;" (with &gt; symbol) after typing enable and password, the password was wrong</li>
+                        <li style="margin-bottom: var(--space-4);">If you see "Access Denied" or "% Bad passwords", you typed the password incorrectly</li>
+                        <li style="margin-bottom: var(--space-4);">If your CAPS LOCK is on, the password will fail (password is case-sensitive!)</li>
+                        <li style="margin-bottom: var(--space-4);">The password is Class123 - NOT class123, NOT CLASS123, NOT Class 123</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="steps-box">
+                <h4>📋 DETAILED STEP-BY-STEP INSTRUCTIONS FOR COMPLETE BEGINNERS</h4>
+                <p style="margin-bottom: var(--space-12); font-style: italic;">Follow these steps exactly. We assume you know nothing about networking.</p>
+                <ol style="line-height: 1.8;">
+                    <li><strong>Open Cisco Packet Tracer.</strong> This is the network simulator software on your computer. It should show a network diagram with various devices.</li>
+                    <li><strong>Look for Router0 in the network diagram.</strong> It looks like a gray rectangular box with a router symbol (usually has antennas or connection ports visible). Router0 is your main routing device.</li>
+                    <li><strong>Click on Router0 one time to select it.</strong> The device will highlight in blue, and a window will pop up showing device details.</li>
+                    <li><strong>At the top of the Router0 window, you'll see several tabs</strong> (like Physical, Config, CLI, Desktop). Click the tab that says <strong>"CLI"</strong>. CLI stands for Command Line Interface - it's where you type text commands.</li>
+                    <li><strong>You'll see a black terminal window with white text.</strong> It might say "Press RETURN to get started" or show a prompt. Press the ENTER key on your keyboard to wake it up.</li>
+                    <li><strong>You'll see "User Access Verification" and "Password:"</strong> Type the console password: <strong>Cisco123</strong> and press ENTER. You won't see characters as you type - this is normal.</li>
+                    <li><strong>You should now see a prompt that says "Hansa_Router&gt;"</strong> (note the &gt; symbol). This is user mode - you can't run important commands here yet.</li>
+                    <li><strong>Type the word: enable</strong> (all lowercase letters: e-n-a-b-l-e) and then press ENTER. This command asks for privileged access.</li>
+                    <li><strong>The system will respond with: "Password:"</strong> This is asking you to prove you have permission to access privileged mode.</li>
+                    <li><strong>Type the password exactly: Class123</strong> (Capital C, then lowercase lass, then numbers 123, no spaces anywhere). You won't see the letters appear as you type - this is normal for password security. Press ENTER when done.</li>
+                    <li><strong>Look at the prompt carefully now.</strong> If you typed the password correctly, you'll see "Hansa_Router#" (notice the # symbol instead of &gt;). The # symbol means you have full privileged access and can run verification commands. If you still see "Hansa_Router&gt;" with the &gt; symbol, the password was wrong - go back to step 7 and try again.</li>
+                    <li><strong>Now you're ready to run the ping command.</strong> Look for the command box below (it has a black background). Click the blue "Copy" button next to the command. This copies "ping 10.10.10.1" to your clipboard without any typos.</li>
+                    <li><strong>Go back to the Router0 CLI window.</strong> Right-click anywhere in the black terminal area. A menu will appear. Select "Paste" from the menu. The command "ping 10.10.10.1" will appear at the Hansa_Router# prompt.</li>
+                    <li><strong>Press ENTER to execute the command.</strong> Watch the screen - you'll see 5 lines that say "Reply from 10.10.10.1" appear one by one. This takes about 2-3 seconds.</li>
+                    <li><strong>Read the final line of output.</strong> It should say "Success rate is 100 percent (5/5)". This means all 5 ping attempts succeeded - the VLAN 10 gateway is working perfectly!</li>
+                </ol>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary); margin-bottom: var(--space-24);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-16);">What This Command Does (Detailed Explanation)</h3>
+                <p style="margin-bottom: var(--space-12);">The command "ping 10.10.10.1" is a network diagnostic tool that tests whether a device is reachable and responding. Here's what happens when you run this command:</p>
+                <p style="margin-bottom: var(--space-12);"><strong>Step 1:</strong> Your command tells Router0 to send a small test message (called an "ICMP echo request") to the IP address 10.10.10.1, which is the VLAN 10 gateway.</p>
+                <p style="margin-bottom: var(--space-12);"><strong>Step 2:</strong> The gateway receives this message and immediately sends back a reply (called an "ICMP echo reply") saying "I'm here and working!"</p>
+                <p style="margin-bottom: var(--space-12);"><strong>Step 3:</strong> This process repeats 5 times automatically (you'll see 5 replies).</p>
+                <p style="margin-bottom: var(--space-12);"><strong>Step 4:</strong> Router0 calculates how many replies it received versus how many it sent, and shows you a success percentage.</p>
+                <p style="margin-bottom: var(--space-12);">Think of it like sending someone 5 text messages asking "Are you there?" and counting how many "Yes!" replies you get back. If you get 5 out of 5 replies, that's 100% success. If you get 0 replies, that means the gateway is offline, unreachable, or not configured. The response time (shown as "time&lt;1ms") tells you how fast the reply came back - under 1 millisecond is instant and excellent. This speed confirms there are no network delays or congestion issues.</p>
+                <p style="margin-bottom: var(--space-12);"><strong>Why IP address 10.10.10.1?</strong> This is the default gateway for VLAN 10. Every device on the guest network (like a guest's laptop with IP 10.10.10.50) sends all its internet traffic to this gateway first. The gateway then routes that traffic to the internet. If this gateway doesn't work, no guest device can access anything beyond the local network.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">THE COMMAND YOU NEED TO COPY</div>
+                <div class="command-box">
+                    <code>ping 10.10.10.1</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'ping 10.10.10.1')">📋 Copy Command</button>
+                </div>
+                <p class="device-label">📍 Device: Router0 | ⚠️ Make sure you see "Hansa_Router#" prompt before pasting!</p>
+            </div>
+
+            <div class="card" style="background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--success); margin: var(--space-24) 0;">
+                <h3 style="color: var(--success); margin-bottom: var(--space-16);">What You Should See - Expected Output</h3>
+                <p style="margin-bottom: var(--space-12);">When you press ENTER after pasting the command, you should see output that looks exactly like this:</p>
+            </div>
+
+            <div class="output-box">Reply from 10.10.10.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.10.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.10.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.10.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.10.1: bytes=32 time&lt;1ms TTL=255
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms</div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.03); margin: var(--space-24) 0;">
+                <h3 style="margin-bottom: var(--space-16);">What Each Line Means (Line-by-Line Explanation)</h3>
+                <ul style="line-height: 1.8;">
+                    <li><strong>"Reply from 10.10.10.1"</strong> = The gateway at IP address 10.10.10.1 received your ping request and sent back a response. This proves the gateway is online and reachable.</li>
+                    <li><strong>"bytes=32"</strong> = The size of the data packet sent. This is a technical detail about packet size - 32 bytes is standard for ping. You don't need to worry about this number.</li>
+                    <li><strong>"time&lt;1ms"</strong> = The response came back in under 1 millisecond. This is EXTREMELY FAST - it means there's no network congestion and the gateway is responding instantly. Anything under 5ms is considered excellent.</li>
+                    <li><strong>"TTL=255"</strong> = "Time To Live" is a counter that prevents packets from circulating forever. 255 is the maximum value, indicating this response came directly from the gateway with no intermediate hops. This is a technical detail you don't need to worry about.</li>
+                    <li><strong>"Success rate is 100 percent (5/5)"</strong> = This is the most important line! It means you sent 5 ping requests and received 5 replies back. 5 out of 5 = 100% = PERFECT SUCCESS. This confirms the VLAN 10 gateway is fully operational.</li>
+                    <li><strong>"round-trip min/avg/max = 0/0/0 ms"</strong> = Shows the minimum, average, and maximum response times. All zeros means response was so fast it rounded to 0 milliseconds. This is ideal performance.</li>
+                </ul>
+                <div style="background: rgba(34, 197, 94, 0.1); padding: var(--space-12); border-radius: var(--radius-sm); margin-top: var(--space-16); border-left: 3px solid var(--success);">
+                    <p style="font-weight: 600; color: var(--success);">✅ If you see this output, congratulations! Your VLAN 10 gateway is working perfectly. Click "Mark Complete" below and move to Test 2.</p>
+                </div>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>⚠️ IF YOUR TEST FAILED - READ THIS COMPREHENSIVE TROUBLESHOOTING SECTION</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <p style="font-weight: 600; color: var(--error); margin-bottom: var(--space-16); font-size: var(--text-lg);">🔴 READ THIS CAREFULLY IF YOUR TEST FAILED</p>
+                        
+                        <div class="troubleshooting-item">
+                            <strong>Problem 1: "Request timed out" or "Success rate is 0 percent (0/5)" or "100% packet loss"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this error means:</strong> You sent 5 ping requests but got ZERO responses back. The gateway at 10.10.10.1 is not responding at all. It's like calling someone's phone and it just rings forever - nobody picks up.</p>
+                            <p><strong>Why this happens:</strong></p>
+                            <ul style="margin-left: var(--space-20); margin-top: var(--space-8);">
+                                <li>The VLAN 10 interface (Gig0/0.10) might not exist on Router0</li>
+                                <li>The interface might be turned off (administratively shutdown)</li>
+                                <li>The physical cable connecting Router0 to Switch0 might be unplugged</li>
+                                <li>Router0 might be powered off (unlikely in Packet Tracer)</li>
+                                <li>The interface might have the wrong IP address configured</li>
+                            </ul>
+                            <p style="margin-top: var(--space-12);"><strong>How to diagnose step-by-step:</strong></p>
+                            <ol style="margin-left: var(--space-20); line-height: 1.8;">
+                                <li>First, check your prompt. Do you see "Hansa_Router#" with the # symbol? If you see "Hansa_Router&gt;" you need to go back to the password section above and type "enable" then password "Class123".</li>
+                                <li>Once you have the Hansa_Router# prompt, type this command: <code>show ip interface brief</code> and press ENTER.</li>
+                                <li>Look at the output carefully. Find any line that contains "10.10.10.1" in the IP-Address column.</li>
+                                <li>If you see a line with 10.10.10.1 and Status shows "up" and Protocol shows "up" - this means "up/up" and the interface is working. The problem is elsewhere (maybe a routing issue).</li>
+                                <li>If you see a line with 10.10.10.1 but Status shows "administratively down" - this means the interface exists but is turned off. You need to enable it.</li>
+                                <li>If you DON'T see 10.10.10.1 anywhere in the output - this means the VLAN 10 interface was never created. It doesn't exist.</li>
+                            </ol>
+                            <p style="margin-top: var(--space-12);"><strong>How to fix:</strong></p>
+                            <ul style="margin-left: var(--space-20);">
+                                <li><strong>If interface is administratively down:</strong> Type <code>configure terminal</code>, then <code>interface GigabitEthernet0/0.10</code>, then <code>no shutdown</code>, then <code>end</code>. Try the ping again.</li>
+                                <li><strong>If interface doesn't exist:</strong> Contact your instructor - the VLAN 10 sub-interface needs to be created and configured.</li>
+                                <li><strong>If you're still stuck:</strong> Verify the parent interface (Gig0/0) is up by typing <code>show ip interface brief</code> and looking for Gig0/0 with status "up/up".</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-20);">
+                            <strong>Problem 2: "% Access denied" or "% Permission denied" or "Command authorization failed"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this error means:</strong> The router is refusing to let you run this command. You don't have permission. This is a security feature.</p>
+                            <p><strong>Why this happens:</strong> You're NOT in privileged mode. You're still in user mode (indicated by the Hansa_Router&gt; prompt instead of Hansa_Router# prompt).</p>
+                            <p style="margin-top: var(--space-12); padding: var(--space-16); background: rgba(192, 21, 47, 0.1); border-left: 3px solid var(--error); border-radius: var(--radius-sm);"><strong>⚠️ CRITICAL PASSWORD STEPS TO FIX THIS (Read Carefully):</strong></p>
+                            <ol style="margin-left: var(--space-20); line-height: 2; margin-top: var(--space-12);">
+                                <li><strong>Step 1:</strong> Look at your command prompt. Do you see "Hansa_Router&gt;" or "Hansa_Router#"?</li>
+                                <li><strong>Step 2:</strong> If you see "Hansa_Router&gt;" (with the &gt; symbol), you're NOT in privileged mode. This is the problem.</li>
+                                <li><strong>Step 3:</strong> If you see "Hansa_Router#" (with the # symbol), you ARE in privileged mode. The error is something else - skip to next problem.</li>
+                                <li><strong>Step 4:</strong> If you're NOT in privileged mode (you saw Hansa_Router&gt;), type the word: <span style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 3px; font-family: monospace;">enable</span></li>
+                                <li><strong>Step 5:</strong> Press ENTER on your keyboard.</li>
+                                <li><strong>Step 6:</strong> You'll see the prompt change to: "Password:" - this is asking for the privileged mode password.</li>
+                                <li><strong>Step 7:</strong> Type exactly: <span style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 3px; font-family: monospace;">Class123</span> (CRITICAL: capital C, lowercase l-a-s-s, numbers 1-2-3, NO SPACES)</li>
+                                <li><strong>Step 8:</strong> As you type, you won't see any letters appear on screen - this is normal password security. Just type it and trust that it's working.</li>
+                                <li><strong>Step 9:</strong> Press ENTER when you're done typing the password.</li>
+                                <li><strong>Step 10:</strong> Look at the prompt again. You should now see "Hansa_Router#" with the # symbol. This means SUCCESS!</li>
+                                <li><strong>Step 11:</strong> Now try running the ping command again. It should work.</li>
+                                <li><strong>Step 12:</strong> If the password fails and you still see "Hansa_Router&gt;", it means you typed the password wrong. Check that your CAPS LOCK key is OFF and try again from Step 4.</li>
+                            </ol>
+                            <p style="margin-top: var(--space-12);"><strong>Common password mistakes:</strong></p>
+                            <ul style="margin-left: var(--space-20);">
+                                <li>Typing "class123" (lowercase c) - WRONG! Must be capital C.</li>
+                                <li>Typing "CLASS123" (all capitals) - WRONG! Only first letter is capital.</li>
+                                <li>Typing "Class 123" (with a space) - WRONG! No spaces allowed.</li>
+                                <li>Typing "Classl23" (letter l instead of number 1) - WRONG! Must be numbers 1-2-3.</li>
+                                <li>Having CAPS LOCK on while typing - this will make the password wrong.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-20);">
+                            <strong>Problem 3: "% Invalid input detected at '^' marker" or "% Incomplete command"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this error means:</strong> There's a typo somewhere in your command. The router doesn't understand what you're asking it to do because the syntax is wrong.</p>
+                            <p><strong>Why this happens:</strong> You typed the command manually and made a mistake. Common typos include:</p>
+                            <ul style="margin-left: var(--space-20);">
+                                <li>Typing "ping 10. 10. 10. 1" with spaces between the numbers (WRONG)</li>
+                                <li>Typing "ping 10.10.1.1" instead of "ping 10.10.10.1" (missing a zero) (WRONG)</li>
+                                <li>Typing "Pin 10.10.10.1" instead of "ping" (WRONG)</li>
+                                <li>Typing "PING 10.10.10.1" in all capitals (sometimes doesn't work)</li>
+                                <li>Typing "10.10.10.1" without the word "ping" first (WRONG)</li>
+                                <li>Adding extra characters like "ping 10.10.10.1." with a period at the end (WRONG)</li>
+                            </ul>
+                            <p style="margin-top: var(--space-12);"><strong>How to fix:</strong></p>
+                            <ol style="margin-left: var(--space-20);">
+                                <li>ALWAYS use the blue "Copy" button above to copy the exact command. This eliminates any chance of typos.</li>
+                                <li>The correct command format is: <code>ping 10.10.10.1</code> (lowercase ping, ONE space, then IP with no spaces between numbers)</li>
+                                <li>Remember: the IP address has FOUR numbers separated by THREE periods (dots)</li>
+                                <li>The third number should be "10" for VLAN 10 (not "1" or "2")</li>
+                                <li>If you copied and pasted correctly and still get this error, make sure you pressed ENTER after pasting</li>
+                            </ol>
+                            <p style="margin-top: var(--space-12); font-style: italic;">💡 Pro tip: Copying and pasting guarantees no typos. Always use the Copy button!</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-20);">
+                            <strong>Problem 4: "Destination Host Unreachable"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this error means:</strong> The router received your ping command successfully, but it can't figure out how to route the traffic to reach 10.10.10.1. The destination exists in the configuration, but there's no path to get there.</p>
+                            <p><strong>Why this happens:</strong> The routing configuration is incomplete. Router0 doesn't have a route to the 10.10.10.0 network, OR the parent interface (Gig0/0) is down.</p>
+                            <p><strong>How to diagnose:</strong> Type <code>show ip route</code> and look for a line containing "10.10.10.0". If you don't see it, the route doesn't exist.</p>
+                            <p><strong>How to fix:</strong> This usually means the sub-interface configuration is incomplete. Verify the sub-interface exists with <code>show ip interface brief</code>. If it exists but you still get this error, check that the parent interface (Gig0/0) is up with "no shutdown" command.</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-20);">
+                            <strong>Problem 5: "% Unrecognized command" or "Translating...domain server (255.255.255.255)"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this error means:</strong> The device doesn't understand the command at all, OR it's trying to treat your command as a hostname to look up.</p>
+                            <p><strong>Why this happens:</strong> You might be on the wrong device (maybe you opened Switch0 instead of Router0), OR you have a typo in the command that makes the router think you're trying to connect to a host.</p>
+                            <p><strong>How to fix:</strong></p>
+                            <ol style="margin-left: var(--space-20);">
+                                <li>Check which device you have open. The prompt should say "Hansa_Router#" or "Hansa_Router&gt;". If it says "Switch0" anything, you're on the wrong device.</li>
+                                <li>Close the CLI window and click on Router0 again to make sure you're on the right device.</li>
+                                <li>Start over with the enable command and password (Class123).</li>
+                                <li>Use the Copy button to copy the command exactly.</li>
+                            </ol>
+                        </div>
+                        
+                        <div style="background: rgba(33, 128, 141, 0.1); padding: var(--space-16); border-radius: var(--radius-sm); margin-top: var(--space-24); border-left: 3px solid var(--primary);">
+                            <p style="font-weight: 600; margin-bottom: var(--space-8);">💡 Still having problems after reading all troubleshooting steps?</p>
+                            <p>Go back to the very beginning of Test 1 and start from Step 1. Read each instruction carefully and follow it exactly. Make sure you complete the password section before trying to run any commands. If you're still stuck after a second attempt, ask your instructor for help - they can verify your Router0 configuration is correct.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test1 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(1)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()" disabled>← Previous</button>
+                <div class="step-counter">Step 1 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Test 2 -->
+        <div id="test2" class="test">
+            <div class="test-header">
+                <div class="test-number">2</div>
+                <div class="test-title">
+                    <h3>VLAN 20 Gateway Connectivity Test</h3>
+                    <div class="test-subtitle">Verify Operations Staff Network Access</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(249, 115, 22, 0.05); border-left: 4px solid var(--warning); margin-bottom: var(--space-20);">
+                <h3 style="color: var(--warning); margin-bottom: var(--space-12);">What You Need to Know</h3>
+                <p>VLAN 20 is the Operations network - this is where critical hotel business happens. It includes the Front Desk PC (for check-ins and check-outs), the Database Server (stores all reservation and guest data), and POS terminals (for processing payments). If VLAN 20 fails, the hotel cannot operate. This test is very similar to Test 1, but we're testing a different VLAN gateway (10.10.20.1 instead of 10.10.10.1). The process is the same - we send 5 pings and expect 5 replies back.</p>
+            </div>
+
+            <div class="steps-box">
+                <h4>QUICK STEPS (Shorter than Test 1)</h4>
+                <ol>
+                    <li>Make sure you're still on Router0 CLI from Test 1 - you should see the "Hansa_Router#" prompt (same device, no need to switch)</li>
+                    <li>If you see "Hansa_Router&gt;" instead of "Hansa_Router#", type <code>enable</code> then password <code>Class123</code> (see Test 1 password section for details)</li>
+                    <li>Copy the ping command using the Copy button below: <code>ping 10.10.20.1</code></li>
+                    <li>Right-click in the CLI window and paste the command at the Hansa_Router# prompt</li>
+                    <li>Press ENTER and watch for 5 replies</li>
+                    <li>Verify the final line says "Success rate is 100 percent (5/5)" which means all pings succeeded and VLAN 20 is working</li>
+                    <li>Click "Mark Complete" below and move to Test 3</li>
+                </ol>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary); margin-bottom: var(--space-20);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-12);">What This Does</h3>
+                <p>This command tests the VLAN 20 gateway at IP address 10.10.20.1. Just like Test 1, we're sending 5 test messages (pings) to the gateway and counting how many replies we get back. VLAN 20 is the Operations network, which means it supports the Front Desk PC, Database Server, and POS terminals. These are mission-critical systems - if they can't reach their gateway, staff can't check in guests, can't process payments, and can't access reservation data. A 100% success rate (5 out of 5 replies) confirms that Router0's sub-interface for VLAN 20 (called Gig0/0.20) is configured correctly, is powered on, and is actively routing operations traffic. This proves the operations network is healthy and ready for use.</p>
+            </div>
+
+            <div class="card" style="background: rgba(34, 197, 94, 0.05); border-left: 4px solid var(--success);">
+                <h3 style="color: var(--success); margin-bottom: var(--space-12);">Expected Result</h3>
+                <p>You should see 5 lines saying "Reply from 10.10.20.1" with response times under 1ms. The summary line at the end should say "Success rate is 100 percent (5/5)". This confirms the Operations VLAN gateway is online and operational. If you see this output, the hotel's operational systems can communicate properly and staff can do their jobs.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">THE COMMAND YOU NEED</div>
+                <div class="command-box">
+                    <code>ping 10.10.20.1</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'ping 10.10.20.1')">📋 Copy</button>
+                </div>
+                <p class="device-label">📍 Device: Router0 (same as Test 1)</p>
+            </div>
+
+            <div class="output-box">Reply from 10.10.20.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.20.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.20.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.20.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.20.1: bytes=32 time&lt;1ms TTL=255
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms</div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>🔧 Troubleshooting Guide (If Test 2 Fails)</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <div class="troubleshooting-item">
+                            <strong>Problem 1: "Request timed out" or "0 percent success rate" (100% packet loss)</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this means:</strong> The VLAN 20 gateway at 10.10.20.1 is not responding to your ping requests. No replies are coming back.</p>
+                            <p><strong>Why this happens:</strong> The Gig0/0.20 sub-interface on Router0 is either missing, turned off (administratively down), or misconfigured with the wrong IP address.</p>
+                            <p><strong>How to fix:</strong> Type this diagnostic command: <code>show ip interface brief | include 10.10.20</code> (this filters the output to show only lines containing 10.10.20). Look at the result:</p>
+                            <ul style="margin-left: var(--space-20);">
+                                <li>If you see a line with 10.10.20.1 and status "up up" - the interface is working, problem is elsewhere</li>
+                                <li>If you see "administratively down" - the interface is turned off. Enable it with <code>no shutdown</code> command</li>
+                                <li>If you see nothing - the VLAN 20 sub-interface doesn't exist and needs to be created</li>
+                            </ul>
+                            <p style="margin-top: var(--space-12); padding: var(--space-12); background: rgba(249, 115, 22, 0.1); border-radius: var(--radius-sm);"><strong>⚠️ PASSWORD NOTE:</strong> If you see "Access Denied" when trying the diagnostic command, you forgot to type "enable" and enter password Class123. Go back to Test 1's password section for detailed instructions on how to enter privileged mode.</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 2: "% Invalid input detected at '^' marker"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this means:</strong> You typed the ping command incorrectly - there's a typo somewhere.</p>
+                            <p><strong>Common mistakes for Test 2:</strong></p>
+                            <ul style="margin-left: var(--space-20);">
+                                <li>Typing "ping 10.10.2.1" instead of "ping 10.10.20.1" (missing the zero in "20")</li>
+                                <li>Typing "ping 10.10.10.1" (using VLAN 10 address instead of VLAN 20 address)</li>
+                                <li>Typing "ping 10.10.30.1" (using VLAN 30 address instead of VLAN 20 address)</li>
+                                <li>Adding spaces: "ping 10. 10. 20. 1" (WRONG - no spaces in IP address)</li>
+                            </ul>
+                            <p><strong>How to fix:</strong> The correct command is <code>ping 10.10.20.1</code> - note the third octet is "20" (two digits). Always use the Copy button above to avoid typos.</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 3: "% Access denied" or "% Permission denied"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this means:</strong> You're not in privileged mode on Router0. Your prompt shows "Hansa_Router&gt;" instead of "Hansa_Router#".</p>
+                            <p><strong>How to fix:</strong> Type <code>enable</code> and press ENTER. When it asks for password, type <code>Class123</code> (capital C, rest lowercase) and press ENTER. You should now see "Hansa_Router#" with the # symbol.</p>
+                            <p style="margin-top: var(--space-12); font-style: italic;">📚 For detailed password instructions with step-by-step guidance, scroll back up to Test 1 and read the "CRITICAL: PASSWORD INFORMATION" section. It has complete explanations of the enable process.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test2 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(2)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+                <div class="step-counter">Step 2 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Test 3 -->
+        <div id="test3" class="test">
+            <div class="test-header">
+                <div class="test-number">3</div>
+                <div class="test-title">
+                    <h3>VLAN 30 Gateway Connectivity Test</h3>
+<div class="test-subtitle">Verify Infrastructure and Security Network</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(192, 21, 47, 0.05); border-left: 4px solid var(--error); margin-bottom: var(--space-20);">
+                <h3 style="color: var(--error); margin-bottom: var(--space-12);">What You Need to Know</h3>
+                <p>VLAN 30 is the Infrastructure &amp; Security network - this is the most security-sensitive network in the hotel. It contains the CCTV security cameras (CCTV-01, CCTV-02) and the NVR (Network Video Recorder) that records all camera footage. If VLAN 30 fails, the hotel loses all security camera monitoring capability - cameras go offline and no footage is recorded. This is a critical security risk. This test verifies that the gateway at 10.10.30.1 is responding, which confirms Router0's Gig0/0.30 sub-interface is working properly. The test process is identical to Tests 1 and 2, just with a different IP address.</p>
+            </div>
+
+            <div class="steps-box">
+                <h4>QUICK STEPS</h4>
+                <ol>
+                    <li>Continue using Router0 CLI from the previous tests - stay in the same window</li>
+                    <li>Verify you see "Hansa_Router#" prompt with # symbol (if not, type <code>enable</code>, password <code>Class123</code>)</li>
+                    <li>Click the Copy button below to copy: <code>ping 10.10.30.1</code></li>
+                    <li>Right-click in CLI, paste the command</li>
+                    <li>Press ENTER and watch for 5 replies</li>
+                    <li>Confirm you see "Success rate is 100 percent (5/5)" - this proves security infrastructure is online</li>
+                </ol>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-12);">What This Does</h3>
+                <p>This test pings the VLAN 30 gateway at 10.10.30.1. VLAN 30 handles Infrastructure and Security traffic, which includes security cameras and the video recording system. When this test shows 100% success (5 out of 5 pings successful), it confirms that the security infrastructure network is operational. The cameras can communicate with the NVR, video footage can be recorded and stored, and security monitoring is active. Response times under 1 millisecond indicate there's no network congestion affecting security systems. This is a critical test because hotel security depends on these cameras working 24/7.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">THE COMMAND</div>
+                <div class="command-box">
+                    <code>ping 10.10.30.1</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'ping 10.10.30.1')">📋 Copy</button>
+                </div>
+                <p class="device-label">📍 Device: Router0</p>
+            </div>
+
+            <div class="output-box">Reply from 10.10.30.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.30.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.30.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.30.1: bytes=32 time&lt;1ms TTL=255
+Reply from 10.10.30.1: bytes=32 time&lt;1ms TTL=255
+
+Success rate is 100 percent (5/5), round-trip min/avg/max = 0/0/0 ms</div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>🔧 Troubleshooting (If Test Fails)</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <div class="troubleshooting-item">
+                            <strong>Problem 1: "Request timed out" (0% success rate)</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this means:</strong> VLAN 30 gateway is not responding - no replies coming back from 10.10.30.1.</p>
+                            <p><strong>Why this happens:</strong> The Infrastructure VLAN sub-interface (Gig0/0.30) is not configured, is turned off, or has wrong IP address.</p>
+                            <p><strong>Solution:</strong> Type <code>show ip interface brief</code> and look for a line with 10.10.30.1. Check if status is "up up" (working) or "administratively down" (turned off). If down, you need to enable it with <code>no shutdown</code> command.</p>
+                            <p style="margin-top: var(--space-12); padding: var(--space-12); background: rgba(249, 115, 22, 0.1); border-radius: var(--radius-sm);"><strong>⚠️ PASSWORD REMINDER:</strong> If diagnostic commands fail with "Access Denied", type <code>enable</code> and password <code>Class123</code>. See Test 1 for detailed password instructions.</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 2: "Destination unreachable"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>What this means:</strong> Router received your ping but can't route traffic to VLAN 30 network.</p>
+                            <p><strong>Why this happens:</strong> VLAN 30 might not exist on Switch0, OR the parent interface Gig0/0 is down.</p>
+                            <p><strong>Solution:</strong> First check Router0 interfaces are all up. Then switch to Switch0 and type <code>show vlan brief</code> to verify VLAN 30 exists in the list.</p>
+                        </div>
+                        
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 3: Typo in IP address</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Common mistake:</strong> Typing "10.10.3.1" instead of "10.10.30.1" (missing the zero).</p>
+                            <p><strong>Solution:</strong> Correct IP is 10.10.30.1 (third octet is "30" with two digits). Use Copy button to avoid typos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test3 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(3)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+                <div class="step-counter">Step 3 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Test 4 -->
+        <div id="test4" class="test">
+            <div class="test-header">
+                <div class="test-number">4</div>
+                <div class="test-title">
+                    <h3>Security Rules Configuration (ACLs)</h3>
+<div class="test-subtitle">Verify Network Isolation and Access Control</div>
+                </div>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary); margin-bottom: var(--space-20);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-12);">What This Does</h3>
+                <p>ACLs (Access Control Lists) are security rules that control which networks can talk to each other. Think of them like security guards who check IDs and only let authorized traffic through. This command displays all the ACL rules configured on Router0. You should see three ACLs:</p>
+                <ul style="margin-left: var(--space-20); margin-top: var(--space-12);">
+                    <li><strong>ACL 102:</strong> Prevents Operations staff (VLAN 20) from accessing security cameras (VLAN 30) - staff don't need to view camera feeds</li>
+                    <li><strong>ACL 103:</strong> Prevents guests (VLAN 10) from accessing operations systems (VLAN 20) - keeps guest and business networks separate</li>
+                    <li><strong>ACL 105:</strong> Allows ONLY the NVR to access cameras - blocks everyone else from viewing camera feeds</li>
+                </ul>
+                <p style="margin-top: var(--space-12);">If this command shows all three ACLs with their rules, it confirms the network security policies are properly configured and active.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">THE COMMAND</div>
+                <div class="command-box">
+                    <code>show access-lists</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show access-lists')">📋 Copy</button>
+                </div>
+                <p class="device-label">📍 Device: Router0 (make sure you see Hansa_Router# prompt)</p>
+            </div>
+
+            <div class="output-box">Extended IP access list 102
+    10 deny ip 10.10.20.0 0.0.0.255 10.10.30.0 0.0.0.255
+    20 permit ip any any
+
+Extended IP access list 103
+    10 deny ip 10.10.10.0 0.0.0.255 10.10.20.0 0.0.0.255
+    20 permit ip any any
+
+Extended IP access list 105
+    10 permit ip host 10.10.30.100 10.10.30.0 0.0.0.255
+    20 deny ip any 10.10.30.0 0.0.0.255</div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>🔧 Troubleshooting</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <div class="troubleshooting-item">
+                            <strong>Problem 1: "% Invalid input detected" or command not recognized</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Why:</strong> Typo in command. Common mistake is typing "show access-list" (singular) instead of "show access-lists" (plural with 's').</p>
+                            <p><strong>Solution:</strong> Correct command is <code>show access-lists</code> (with 's' at end). Use Copy button to avoid typos.</p>
+                        </div>
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 2: Command shows nothing or "No ACLs configured"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Why:</strong> ACLs were never created during router configuration.</p>
+                            <p><strong>Solution:</strong> The ACL configuration step was skipped. Contact instructor to verify setup is complete.</p>
+                        </div>
+                        <div style="margin-top: var(--space-16); padding: var(--space-12); background: rgba(249, 115, 22, 0.1); border-radius: var(--radius-sm);">
+                            <p><strong>⚠️ PASSWORD NOTE:</strong> If you see "% Access denied" or "% Permission denied", type <code>enable</code> then password <code>Class123</code>. See Test 1 for detailed password help.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test4 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(4)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+                <div class="step-counter">Step 4 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Test 5 -->
+        <div id="test5" class="test">
+            <div class="test-header">
+                <div class="test-number">5</div>
+                <div class="test-title">
+                    <h3>Network Segmentation Status (VLANs)</h3>
+<div class="test-subtitle">Verify All VLANs Created and Port Assignments</div>
+                </div>
+            </div>
+
+            <div class="warning-card" style="margin-bottom: var(--space-20);">
+                <h3 style="color: var(--error); margin-bottom: var(--space-16);">⚠️ IMPORTANT: This Test Uses Switch0, NOT Router0!</h3>
+                <p style="font-weight: 600; margin-bottom: var(--space-12);">You must switch devices for this test. Here's how:</p>
+            </div>
+
+            <div class="steps-box">
+                <h4>HOW TO SWITCH TO SWITCH4</h4>
+                <ol style="line-height: 1.8;">
+                    <li><strong>Close the Router0 CLI window</strong> - click the X button or close the device window</li>
+                    <li><strong>Find Switch0 in your Packet Tracer diagram</strong> - it looks like a switch device (rectangular box with multiple ports)</li>
+                    <li><strong>Click on Switch0 one time</strong> - a new device window will open</li>
+                    <li><strong>Click the "CLI" tab</strong> at the top of the Switch0 window</li>
+                    <li><strong>Press ENTER</strong> if you see "Press RETURN to get started"</li>
+                    <li><strong>Type: enable</strong> and press ENTER</li>
+                    <li><strong>Type password: Class123</strong> (capital C, rest lowercase) and press ENTER</li>
+                    <li><strong>Verify you see "Hansa_Switch#"</strong> with # symbol - this confirms you're on Switch0 in privileged mode</li>
+                    <li><strong>Now you're ready</strong> to run the command below</li>
+                </ol>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-12);">What This Command Does</h3>
+                <p>The command "show vlan brief" displays all VLANs configured on Switch0 and shows which physical ports are assigned to each VLAN. You should see four VLANs listed: VLAN 10 (Guest), VLAN 20 (Operations), VLAN 30 (Infrastructure), and VLAN 40 (Management). Each VLAN should have ports assigned to it - for example, guest access points on VLAN 10, front desk PC port on VLAN 20, camera ports on VLAN 30. This verifies the network is properly segmented - devices are organized into their correct security zones. If all four VLANs appear with "active" status and have ports assigned, the switch configuration is correct.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">THE COMMAND</div>
+                <div class="command-box">
+                    <code>show vlan brief</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show vlan brief')">📋 Copy</button>
+                </div>
+                <p class="device-label">📍 Device: Switch0 (NOT Router0!) - Make sure prompt says "Hansa_Switch#"</p>
+            </div>
+
+            <div class="output-box">VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gig0/1
+10   Hansa_Guest                      active    Fa0/11, Fa0/12, Fa0/16
+20   Hansa_Operations                 active    Fa0/1, Fa0/2, Fa0/3
+30   Hansa_Infrastructure             active    Fa0/7, Fa0/8, Fa0/9
+40   Hansa_Management                 active    </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>🔧 Troubleshooting</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <div class="troubleshooting-item">
+                            <strong>Problem 1: "% Invalid input" or command doesn't work</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Why:</strong> You're probably still on Router0 instead of Switch0. This command only works on switches.</p>
+                            <p><strong>Solution:</strong> Look at your prompt. Does it say "Hansa_Router#" or "Hansa_Switch#"? If it says Router0, close that window, open Switch0, type <code>enable</code>, password <code>Class123</code>, then try again.</p>
+                        </div>
+                        <div class="troubleshooting-item" style="margin-top: var(--space-16);">
+                            <strong>Problem 2: Only VLAN 1 (default) showing in output</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Why:</strong> VLANs 10, 20, 30, 40 were never created during switch configuration.</p>
+                            <p><strong>Solution:</strong> The VLAN creation step was skipped. Contact instructor - the switch needs to have VLANs 10, 20, 30, 40 created.</p>
+                        </div>
+                        <div style="margin-top: var(--space-16); padding: var(--space-12); background: rgba(249, 115, 22, 0.1); border-radius: var(--radius-sm);">
+                            <p><strong>⚠️ PASSWORD REMINDER:</strong> If you see "Access Denied" on Switch0, type <code>enable</code> and password <code>Class123</code>. See Test 1 for detailed password instructions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test5 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(5)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+                <div class="step-counter">Step 5 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()">Next →</button>
+            </div>
+        </div>
+
+        <!-- Test 6 -->
+        <div id="test6" class="test">
+            <div class="test-header">
+                <div class="test-number">6</div>
+                <div class="test-title">
+                    <h3>Complete System Health Verification</h3>
+                    <div class="test-subtitle">Comprehensive Network Diagnostic Check</div>
+                </div>
+            </div>
+
+            <div class="warning-card" style="margin-bottom: var(--space-20);">
+                <h3 style="color: var(--primary); margin-bottom: var(--space-12);">🔄 Switch Back to Router0</h3>
+                <p>Close Switch0 CLI window. Click on Router0 device. Click CLI tab. Type <code>enable</code>, password <code>Class123</code>. Verify you see "Hansa_Router#" prompt.</p>
+            </div>
+
+            <div class="card" style="background: rgba(33, 128, 141, 0.05); border-left: 4px solid var(--primary); margin-bottom: var(--space-20);">
+                <h3 style="margin-bottom: var(--space-12);">What This Test Does</h3>
+                <p>Test 6 is the final comprehensive system health check. You'll run four different verification commands to confirm everything is working together correctly. These commands check: all interfaces are up and have correct IPs, routing table has all necessary routes, security rules (ACLs) are in place, and the complete configuration is saved. Think of this as a "final inspection" before declaring the network ready for production use.</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">Command 1: Interface Status</div>
+                <div class="command-box">
+                    <code>show ip interface brief</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show ip interface brief')">Copy</button>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: var(--space-8) 0;">Expected: All sub-interfaces up/up with correct IPs (10.10.10.1, 10.10.20.1, 10.10.30.1)</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">Command 2: Routing Table</div>
+                <div class="command-box">
+                    <code>show ip route</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show ip route')">Copy</button>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: var(--space-8) 0;">Expected: Connected routes for all VLANs (10.10.10.0/24, 10.10.20.0/24, 10.10.30.0/24)</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">Command 3: Security Rules</div>
+                <div class="command-box">
+                    <code>show access-lists</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show access-lists')">Copy</button>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: var(--space-8) 0;">Expected: ACL 102, 103, 105 with deny and permit statements</p>
+            </div>
+
+            <div class="command-section">
+                <div class="command-label">Command 4: Full Configuration</div>
+                <div class="command-box">
+                    <code>show running-config</code>
+                    <button class="copy-btn" onclick="copyCommand(this, 'show running-config')">Copy</button>
+                </div>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: var(--space-8) 0;">Expected: Complete router configuration including all sub-interfaces and ACLs</p>
+            </div>
+
+            <div class="expandable">
+                <div class="expandable-header" onclick="toggleExpand(this)">
+                    <span>🔧 Troubleshooting</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <div class="expandable-body">
+                        <div class="troubleshooting-item">
+                            <strong>Problem: Any command shows "% Access denied" or "% Permission denied"</strong>
+                            <p style="margin-top: var(--space-8);"><strong>Solution:</strong> Type <code>enable</code> and password <code>Class123</code>. Make sure you're on Router0 (not Switch0). See Test 1 for detailed password instructions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="toggleExpand(document.querySelector('#test6 .expandable-header'))">Show Troubleshooting</button>
+                <button class="btn btn-primary" onclick="markComplete(6)">Mark Complete ✓</button>
+            </div>
+
+            <div class="nav-footer">
+                <button class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+                <div class="step-counter">Step 6 of 6</div>
+                <button class="btn btn-secondary" onclick="nextStep()" disabled>Next →</button>
+            </div>
+        </div>
+
+        <!-- Completion Message -->
+        <div id="completion" class="test" style="display: none;">
+            <div class="completion-card">
+                <div class="completion-icon">🎉</div>
+                <h2 style="color: var(--success); font-size: var(--text-3xl); margin-bottom: var(--space-24);">Congratulations! You've Completed All 6 Verification Tests!</h2>
+                <div style="background: rgba(34, 197, 94, 0.1); padding: var(--space-24); border-radius: var(--radius-lg); border: 2px solid var(--success); margin: var(--space-24) 0;">
+                    <p style="font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-12);">Your Hansa Villa network has been successfully verified.</p>
+                    <p style="color: var(--text-secondary);">All systems are operational:</p>
+                    <ul style="text-align: left; margin: var(--space-16) auto; max-width: 600px; line-height: 1.8;">
+                        <li>✅ VLAN 10 (Guest WiFi) - Gateway responding</li>
+                        <li>✅ VLAN 20 (Operations) - Gateway responding</li>
+                        <li>✅ VLAN 30 (Infrastructure &amp; Security) - Gateway responding</li>
+                        <li>✅ Security Rules (ACLs) - Configured and active</li>
+                        <li>✅ Network Segmentation (VLANs) - All VLANs created</li>
+                        <li>✅ System Health - All interfaces operational</li>
+                    </ul>
+                </div>
+                <p style="font-size: var(--text-base); color: var(--text-secondary); margin-top: var(--space-24);">You can review any test by clicking the numbered circles in the progress bar at the top of this page.</p>
+                <button class="btn btn-primary" onclick="jumpToStep(1)" style="margin-top: var(--space-24); padding: var(--space-16) var(--space-32); font-size: var(--text-lg);">Review Tests from Beginning</button>
+            </div>
+        </div>
+
+        <!-- ========== SECTION 3: REFERENCE & INVENTORY ========== -->
+
+        <section id="inventory" style="display: none;">
+            <h2>📦 Complete Device Inventory</h2>
+            <div class="card">
+                <p><strong>Total Devices:</strong> 21 network devices configured</p>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Location</th>
+                                <th>Device Name</th>
+                                <th>IP Address</th>
+                                <th>VLAN</th>
+                                <th>Switch Port</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>Front Desk PC</td>
+                                <td><code>10.10.20.10</code></td>
+                                <td>20 (Operations)</td>
+                                <td>Fa0/1</td>
+                                <td>Check-in/Check-out</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>Server-PT</td>
+                                <td><code>10.10.20.50</code></td>
+                                <td>20 (Operations)</td>
+                                <td>Fa0/2</td>
+                                <td>Database Server</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>POS Terminal</td>
+                                <td><code>10.10.20.20</code></td>
+                                <td>20 (Operations)</td>
+                                <td>Fa0/3</td>
+                                <td>Point of Sale</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>CCTV-01</td>
+                                <td><code>10.10.30.31</code></td>
+                                <td>30 (Infrastructure)</td>
+                                <td>Fa0/7</td>
+                                <td>Security Camera</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>CCTV-02</td>
+                                <td><code>10.10.30.32</code></td>
+                                <td>30 (Infrastructure)</td>
+                                <td>Fa0/8</td>
+                                <td>Security Camera</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>NVR</td>
+                                <td><code>10.10.30.100</code></td>
+                                <td>30 (Infrastructure)</td>
+                                <td>Fa0/9</td>
+                                <td>Video Recorder</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>Guest Laptop 1</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>Fa0/11</td>
+                                <td>Guest Device</td>
+                            </tr>
+                            <tr>
+                                <td>Ground Floor</td>
+                                <td>Guest Laptop 2</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>Fa0/12</td>
+                                <td>Guest Device</td>
+                            </tr>
+                            <tr>
+                                <td>Core Network</td>
+                                <td>Router0</td>
+                                <td><code>Multiple</code></td>
+                                <td>All VLANs</td>
+                                <td>Gig0/0</td>
+                                <td>Inter-VLAN Routing</td>
+                            </tr>
+                            <tr>
+                                <td>Core Network</td>
+                                <td>Switch0</td>
+                                <td><code>10.10.40.10</code></td>
+                                <td>40 (Management)</td>
+                                <td>Gig0/1</td>
+                                <td>Layer 2 Switching</td>
+                            </tr>
+                            <tr>
+                                <td>First Floor</td>
+                                <td>Room 101 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                            <tr>
+                                <td>First Floor</td>
+                                <td>Room 102 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                            <tr>
+                                <td>Second Floor</td>
+                                <td>Room 201 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                            <tr>
+                                <td>Second Floor</td>
+                                <td>Room 202 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                            <tr>
+                                <td>Third Floor</td>
+                                <td>Room 301 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                            <tr>
+                                <td>Third Floor</td>
+                                <td>Room 302 Laptop</td>
+                                <td><code>DHCP</code></td>
+                                <td>10 (Guest)</td>
+                                <td>-</td>
+                                <td>Guest Room</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="commands" style="display: none;">
+            <h2>⚡ Quick Command Cheat Sheet</h2>
+            <div class="card">
+                <h3>Essential Verification Commands</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Purpose</th>
+                            <th>Device</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ping 10.10.10.1</code></td>
+                            <td>Test VLAN 10 gateway</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>ping 10.10.20.1</code></td>
+                            <td>Test VLAN 20 gateway</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>ping 10.10.30.1</code></td>
+                            <td>Test VLAN 30 gateway</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>show access-lists</code></td>
+                            <td>View all ACLs</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>show vlan brief</code></td>
+                            <td>View VLAN status</td>
+                            <td>Switch0</td>
+                        </tr>
+                        <tr>
+                            <td><code>show ip interface brief</code></td>
+                            <td>View interface status</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>show ip route</code></td>
+                            <td>View routing table</td>
+                            <td>Router0</td>
+                        </tr>
+                        <tr>
+                            <td><code>show running-config</code></td>
+                            <td>View complete config</td>
+                            <td>Both</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="workflow" style="display: none;">
+            <h2>🔄 Network Data Flow Workflow</h2>
+            <div class="card">
+                <h3>How Traffic Flows Through the Network</h3>
+                <ol>
+                    <li><strong>Guest Laptop connects to WiFi</strong> → Assigned to VLAN 10 → Gets IP from DHCP (10.10.10.x range)</li>
+                    <li><strong>Guest attempts internet access</strong> → Traffic goes to Switch0 → Routed through Router0 Gig0/0.10 sub-interface</li>
+                    <li><strong>Router0 checks ACL 103</strong> → Guest traffic to Operations VLAN is DENIED → Guest can access internet only</li>
+                    <li><strong>Front Desk PC sends data</strong> → VLAN 20 → Router0 Gig0/0.20 → ACL 102 blocks access to cameras</li>
+                    <li><strong>Security camera streams video</strong> → VLAN 30 → Only NVR (10.10.30.100) can access via ACL 105</li>
+                    <li><strong>All VLANs remain isolated</strong> → Inter-VLAN routing controlled by Router0 → Security maintained</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="instructions" style="display: none;">
+            <h2>📖 How to Use with Cisco Packet Tracer</h2>
+            <div class="card">
+                <h3>Complete Setup Instructions</h3>
+                <ol>
+                    <li><strong>Open Packet Tracer</strong> and load your <code>.pkt</code> file</li>
+                    <li><strong>Wait 2-5 minutes</strong> for all switch ports to turn GREEN (spanning tree convergence)</li>
+                    <li><strong>Verify port status:</strong> Look at Switch0 - all connected ports should show green indicators</li>
+                    <li><strong>Access Router0:</strong> Click device → CLI tab → Press ENTER</li>
+                    <li><strong>Enter console password:</strong> When prompted, type <code>Cisco123</code></li>
+                    <li><strong>Enter privileged mode:</strong> Type <code>enable</code> → Password: <code>Class123</code></li>
+                    <li><strong>Copy commands from this portal</strong> and paste into CLI (right-click → paste)</li>
+                    <li><strong>Run each test in order</strong> (Tests 1-6) and mark complete when successful</li>
+                    <li><strong>For Test 5:</strong> Switch to Switch0 CLI (close Router0, open Switch0)</li>
+                    <li><strong>For Test 6:</strong> Switch back to Router0 CLI</li>
+                    <li><strong>Document results:</strong> Print this page or export configuration when complete</li>
+                </ol>
+
+                <h3 style="margin-top: var(--space-24);">Troubleshooting Tips</h3>
+                <ul>
+                    <li>If pings fail, verify ports are GREEN before retrying</li>
+                    <li>If commands fail, ensure you're in privileged mode (# prompt, not &gt; prompt)</li>
+                    <li>If you see "Invalid input", use the Copy button to avoid typos</li>
+                    <li>If Switch0 commands fail, verify you're on Switch0 CLI, not Router0</li>
+                    <li>Save your work frequently: <code>copy running-config startup-config</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="presentation" style="display: none;">
+            <h2>🎭 12-Minute Director Presentation Guide</h2>
+            <div class="card">
+                <h3>Professional Network Verification Presentation</h3>
+                <p><strong>Total Time:</strong> 12 minutes | <strong>Audience:</strong> Technical Director</p>
+                
+                <h4>Introduction (2 minutes)</h4>
+                <ul>
+                    <li>"Good morning. Today I'll demonstrate the complete verification of the Hansa Villa hotel network."</li>
+                    <li>"This network supports 4 VLANs serving guests, operations staff, security infrastructure, and management."</li>
+                    <li>"I'll run 6 verification tests to prove the network is fully operational and secure."</li>
+                </ul>
+
+                <h4>Test Demonstrations (7 minutes)</h4>
+                <ul>
+                    <li><strong>Test 1-3 (3 min):</strong> "First, I'll verify all VLAN gateways are responding. Watch as I ping each gateway - 100% success rate confirms routing is working."</li>
+                    <li><strong>Test 4 (2 min):</strong> "Next, security rules. The ACLs you see here prevent guests from accessing operations and staff from accessing cameras."</li>
+                    <li><strong>Test 5 (1 min):</strong> "Switching to Switch0, this shows all VLANs are created and ports are properly assigned."</li>
+                    <li><strong>Test 6 (1 min):</strong> "Finally, comprehensive system check - all interfaces are up, routing table is populated."</li>
+                </ul>
+
+                <h4>Network Security Explanation (2 minutes)</h4>
+                <ul>
+                    <li>"Our security model has three layers: VLAN segmentation, ACL rules, and physical port security."</li>
+                    <li>"Guests in VLAN 10 cannot access operations in VLAN 20 - prevented by ACL 103."</li>
+                    <li>"Staff in VLAN 20 cannot access cameras in VLAN 30 - prevented by ACL 102."</li>
+                    <li>"Only the NVR can view camera feeds - all other access is denied by ACL 105."</li>
+                </ul>
+
+                <h4>Conclusion (1 minute)</h4>
+                <ul>
+                    <li>"All 6 tests passed with 100% success."</li>
+                    <li>"The network is fully operational, secure, and ready for production use."</li>
+                    <li>"Documentation and configuration files are available for review."</li>
+                    <li>"Questions?"</li>
+                </ul>
+
+<h4>Key Points to Emphasize</h4>
+                <ul>
+                    <li>✓ <strong>Reliability:</strong> 100% success rate on all gateway tests</li>
+                    <li>✓ <strong>Security:</strong> Multi-layer isolation with ACLs</li>
+                    <li>✓ <strong>Scalability:</strong> Network can grow to support more devices</li>
+                    <li>✓ <strong>Compliance:</strong> Follows industry best practices for hotel networks</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="troubleshooting" style="display: none;">
+<h2>🔧 Comprehensive Troubleshooting Guide</h2>
+            <div class="card">
+                <h3>Common Issues &amp; Solutions</h3>
+                
+                <div class="troubleshooting-item">
+                    <strong>All pings fail immediately after opening file</strong>
+                    <p><em>Cause:</em> Switch ports are still in orange (STP convergence not complete)</p>
+                    <p><em>Solution:</em> Wait 2-5 minutes for all ports to turn green. Do not proceed until GREEN.</p>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <strong>"Invalid input detected" error on every command</strong>
+                    <p><em>Cause:</em> Not in privileged mode OR typo in command</p>
+                    <p><em>Solution:</em> Type <code>enable</code> and password <code>Class123</code>. Use Copy buttons to avoid typos.</p>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <strong>show vlan brief returns "Invalid input"</strong>
+                    <p><em>Cause:</em> Command run on Router0 instead of Switch0</p>
+                    <p><em>Solution:</em> Close Router0 CLI, open Switch0 CLI, enable, then retry command.</p>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <strong>ACLs show empty or missing</strong>
+                    <p><em>Cause:</em> ACL configuration was not saved or not applied to interfaces</p>
+                    <p><em>Solution:</em> Verify ACL configuration in running-config. Check interface ACL assignments.</p>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <strong>Some interfaces show "administratively down"</strong>
+                    <p><em>Cause:</em> Interface is shutdown (disabled)</p>
+                    <p><em>Solution:</em> Enter interface config mode and type <code>no shutdown</code> to enable.</p>
+                </div>
+
+                <div class="troubleshooting-item">
+                    <strong>Paste doesn't work in CLI</strong>
+                    <p><em>Cause:</em> Packet Tracer paste requires specific method</p>
+                    <p><em>Solution:</em> Copy text, then RIGHT-CLICK in CLI window and select Paste (not Ctrl+V).</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p style="font-size: var(--text-sm); color: var(--text-secondary);">Hansa Villa Network Verification &copy; 2024</p>
+    </footer>
+
+    <!-- AI Chatbot Button -->
+    <button class="chatbot-button" onclick="toggleChatbot()" aria-label="Password Helper">
+        🔐
+    </button>
+
+    <!-- Chatbot Panel -->
+    <div id="chatbotPanel" class="chatbot-panel">
+        <div class="chatbot-header">
+            <h3>Password Helper</h3>
+            <button class="chatbot-close" onclick="toggleChatbot()">×</button>
+        </div>
+        <div class="chatbot-body">
+            <div class="chatbot-message">
+                <strong>Step 1: Console Password (First Login)</strong>
+                <p>When you first open Router0 or Switch0 CLI, you'll see:</p>
+                <p style="font-family: 'Courier New', monospace; background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">User Access Verification<br>Password:</p>
+                <p>Type the console password:</p>
+                <div class="password-value" style="margin: var(--space-8) 0;">Cisco123</div>
+                <p style="font-size: var(--text-sm); margin-top: var(--space-8);">After entering, you'll see: <code>Hansa_Router&gt;</code> or <code>Hansa_Switch&gt;</code></p>
+            </div>
+            <div class="chatbot-message">
+                <strong>Step 2: Enable/Privileged Mode Password</strong>
+                <p>After console login, type <code>enable</code> and press ENTER:</p>
+                <p style="font-family: 'Courier New', monospace; background: rgba(0,0,0,0.05); padding: var(--space-8); border-radius: var(--radius-sm); margin: var(--space-8) 0;">Hansa_Router&gt; enable<br>Password:</p>
+                <p>Type the enable password:</p>
+                <div class="password-value" style="margin: var(--space-8) 0;">Class123</div>
+                <p style="font-size: var(--text-sm); margin-top: var(--space-8);">After entering, you'll see: <code>Hansa_Router#</code> or <code>Hansa_Switch#</code></p>
+            </div>
+            <div class="chatbot-message">
+                <strong>Important Notes:</strong>
+                <ul style="margin: var(--space-8) 0 0 var(--space-20); font-size: var(--text-sm);">
+                    <li><strong>Console Password:</strong> <code>Cisco123</code> (Capital C, lowercase i-s-c-o, numbers 1-2-3)</li>
+                    <li><strong>Enable Password:</strong> <code>Class123</code> (Capital C, lowercase l-a-s-s, numbers 1-2-3)</li>
+                    <li>Both passwords are case-sensitive - make sure CAPS LOCK is OFF</li>
+                    <li>No spaces before or after</li>
+                    <li>You won't see characters as you type (normal for security)</li>
+                    <li>Same passwords work for both Router0 and Switch0</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script defer>
+        // State management
+        let currentStep = 1;
+        const totalSteps = 6;
+        const completedSteps = new Set();
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showStep(1);
+            updateProgress();
+        });
+
+        // Show specific step
+        function showStep(step) {
+            document.querySelectorAll('.test').forEach(test => {
+                test.classList.remove('active');
+            });
+            document.getElementById('completion').style.display = 'none';
+
+            if (step <= totalSteps) {
+                document.getElementById('test' + step).classList.add('active');
+                currentStep = step;
+            } else {
+                document.getElementById('completion').style.display = 'block';
+            }
+
+            updateProgressCircles();
+            
+            // Scroll to wizard section
+            const wizardEl = document.getElementById('wizard');
+            if (wizardEl) {
+                wizardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Update progress circles
+        function updateProgressCircles() {
+            const circles = document.querySelectorAll('.progress-step');
+            circles.forEach((circle, index) => {
+                const stepNum = index + 1;
+                circle.classList.remove('active', 'completed');
+                
+                if (completedSteps.has(stepNum)) {
+                    circle.classList.add('completed');
+                    circle.textContent = '';
+                } else {
+                    circle.textContent = stepNum;
+                }
+                
+                if (stepNum === currentStep) {
+                    circle.classList.add('active');
+                }
+            });
+
+            updateProgress();
+        }
+
+        // Update progress line
+        function updateProgress() {
+            const completed = completedSteps.size;
+            const percentage = (completed / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Jump to step
+        function jumpToStep(step) {
+            if (step >= 1 && step <= totalSteps) {
+                showStep(step);
+            }
+        }
+
+        // Previous step
+        function prevStep() {
+            if (currentStep > 1) {
+                showStep(currentStep - 1);
+            }
+        }
+
+        // Next step
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                showStep(currentStep + 1);
+            } else if (currentStep === totalSteps) {
+                showStep(totalSteps + 1);
+            }
+        }
+
+        // Mark complete
+        function markComplete(step) {
+            if (!completedSteps.has(step)) {
+                completedSteps.add(step);
+                updateProgressCircles();
+                showToast('Test ' + step + ' marked complete! ✓', 'success');
+                
+                setTimeout(() => {
+                    if (step < totalSteps) {
+                        showStep(step + 1);
+                    } else {
+                        showStep(totalSteps + 1);
+                    }
+                }, 800);
+            } else {
+                showToast('Already completed', 'success');
+            }
+        }
+
+        // Toggle expandable
+        function toggleExpand(header) {
+            const expandable = header.parentElement;
+            expandable.classList.toggle('active');
+        }
+
+        // Copy command
+        function copyCommand(btn, text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                showToast('Command copied to clipboard', 'success');
+                
+                setTimeout(() => {
+                    btn.textContent = 'Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                btn.textContent = 'Error';
+                showToast('Failed to copy', 'error');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        // Show toast
+        function showToast(message, type = 'default') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show';
+            
+            if (type === 'success') {
+                toast.classList.add('success');
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevStep();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextStep();
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                markComplete(currentStep);
+            } else if (e.key >= '1' && e.key <= '6') {
+                e.preventDefault();
+                jumpToStep(parseInt(e.key));
+            }
+        });
+
+        // Chatbot toggle function
+        function toggleChatbot() {
+            const panel = document.getElementById('chatbotPanel');
+            panel.classList.toggle('active');
+        }
+
+        // Close chatbot when clicking outside
+        document.addEventListener('click', (e) => {
+            const panel = document.getElementById('chatbotPanel');
+            const button = document.querySelector('.chatbot-button');
+            if (panel && panel.classList.contains('active') && !panel.contains(e.target) && !button.contains(e.target)) {
+                panel.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
